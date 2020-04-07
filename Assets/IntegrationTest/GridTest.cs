@@ -17,6 +17,9 @@ namespace IntegrationTest {
             var sceneName = "MainScene";
             yield return LoadScene(sceneName);
 
+            // Wait a few seconds to ensure the scene starts correctly
+            yield return new WaitForSeconds(2.0f);
+
             var currentSceneName = SceneManager.GetActiveScene().name;
             Assert.That(currentSceneName, Is.EqualTo(sceneName));
 
