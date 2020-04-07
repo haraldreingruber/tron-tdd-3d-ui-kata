@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,10 +24,13 @@ namespace IntegrationTest {
             var currentSceneName = SceneManager.GetActiveScene().name;
             Assert.That(currentSceneName, Is.EqualTo(sceneName));
 
-            var grid = Object.FindObjectOfType<Grid>();
+            var grid = Object.FindObjectsOfType<Identifier>()
+                .Where(identifier => identifier.id == "Grid")
+                .Select(identifier => identifier.gameObject).
+                First();
 
             Assert.NotNull(grid, "grid");
-            Assert.That(grid.isActiveAndEnabled, "grid.isActiveAndEnabled");
+            Assert.That(grid.activeInHierarchy, "grid.activeInHierarchy");
         }
     }
 }
