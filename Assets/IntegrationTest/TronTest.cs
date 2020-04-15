@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -30,22 +31,33 @@ namespace IntegrationTest
             var height = scale.y;
 
             Assert.That(width, Is.EqualTo(depth));
-            Assert.That(height, Is.EqualTo(width*3));
+            Assert.That(height, Is.EqualTo(width * 3));
         }
 
-        /*
         [UnityTest]
         public IEnumerator TestTronStartsRacing()
         {
-            yield return GivenScene(this, "MainScene");
-
-            StartRace();
-            // yield return new WaitForEndOfFrame();
-
+            yield return Given.Scene(this, "MainScene");
             const string objectId = "Tron";
-            var tron = findSingleObjectById(objectId);
-//            assertThat(tron, isDrving);
+            var tron = Find.SingleObjectById(objectId);
+            var originalPosition = tron.transform.position;
+
+            // TODO tron.transform.GetComponent<Tron>().StartRace();
+
+            yield return new WaitForSeconds(2.0f);
+            var newPosition = tron.transform.position;
+
+            Assert.That(newPosition.y, Is.EqualTo(originalPosition.y));
+            Assert.That(Math.Abs(newPosition.z-originalPosition.z), Is.GreaterThan(1.0f));
         }
-        */
+
+        // TODO maybe refactor to use Tron component instead of GameObject in all places
+
+        /*
+         * Test list
+         * - do not move unless start racing
+         * - speed or relative movement
+         * - leaves walls behind
+         */
     }
 }
