@@ -25,15 +25,28 @@ namespace IntegrationTest {
             Assert.That(currentSceneName, Is.EqualTo(sceneName));
             // TODO extract as givenScene
 
-            var grid = Object.FindObjectsOfType<Identifier>()
-                .Where(identifier => identifier.id == "Grid")
-                .Select(identifier => identifier.gameObject).
-                First(); // TODO fail if there are more than one
+            var objectId = "Grid";
+            var grid = findSingleObjectById(objectId);
 
-            Assert.NotNull(grid, "grid");
-            Assert.That(grid.activeInHierarchy, "grid.activeInHierarchy");
+            AssertIsVisible(grid, objectId);
             // open question: Do we need to test the size of the grid?
             // Definitely not test the colour of the grid.
+        }
+
+        private static GameObject findSingleObjectById(string objectId)
+        {
+            var gameObjects = Object.FindObjectsOfType<Identifier>()
+                .Where(identifier => identifier.id == objectId)
+                .Select(identifier => identifier.gameObject)
+                .ToList();
+            Assert.That(gameObjects.Count, Is.EqualTo(1));
+            return gameObjects[0];
+        }
+
+        private static void AssertIsVisible(GameObject gameObject, string objectId)
+        {
+            Assert.NotNull(gameObject, objectId);
+            Assert.That(gameObject.activeInHierarchy, objectId + ".activeInHierarchy");
         }
 
         /*
