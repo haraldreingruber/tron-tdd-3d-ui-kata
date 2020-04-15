@@ -176,6 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 663769990}
   - component: {fileID: 663769989}
+  - component: {fileID: 663769991}
   m_Layer: 0
   m_Name: Tron
   m_TagString: Untagged
@@ -211,6 +212,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &663769991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663769988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f439d71114d8a4b8a347919c2197cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visualization: {fileID: 1869174820}
+  interaction: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +507,7 @@ GameObject:
   - component: {fileID: 1869174824}
   - component: {fileID: 1869174823}
   - component: {fileID: 1869174822}
+  - component: {fileID: 1869174825}
   m_Layer: 0
   m_Name: CycleCube
   m_TagString: Untagged
@@ -573,3 +589,16 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1869174820}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1869174825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869174820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b715cc785bc0a18488151b6e33e53938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 

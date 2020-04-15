@@ -69,15 +69,16 @@ namespace IntegrationTest
 
         private void AssertIsTwiceAsHigh(GameObject tron, string objectId)
         {
-            //tron.transform.GetComponent<Tron>()
+            var tronViz = tron.transform.GetComponent<Tron>().visualization;
 
-            var scale = tron.transform.localScale;
+
+            var scale = tronViz.transform.localScale;
             var width = scale.x;
             var depth = scale.z;
             var height = scale.y;
 
             Assert.That(width, Is.EqualTo(depth));
-            Assert.That(height, Is.EqualTo(width));
+            Assert.That(height, Is.EqualTo(width*3));
         }
 
         /*
