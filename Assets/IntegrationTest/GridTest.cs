@@ -15,7 +15,17 @@ namespace IntegrationTest {
         // 4. Assert.that("tron is at the 'correct' location)
         [UnityTest]
         public IEnumerator TestGridExists() {
-            var sceneName = "MainScene";
+            yield return GivenScene("MainScene");
+
+            const string objectId = "Grid";
+            var grid = findSingleObjectById(objectId);
+            AssertIsVisible(grid, objectId);
+            // open question: Do we need to test the size of the grid?
+            // Definitely not test the colour of the grid.
+        }
+
+        private IEnumerator GivenScene(string sceneName)
+        {
             yield return LoadScene(sceneName);
 
             // Wait a few seconds to ensure the scene starts correctly
@@ -23,14 +33,6 @@ namespace IntegrationTest {
 
             var currentSceneName = SceneManager.GetActiveScene().name;
             Assert.That(currentSceneName, Is.EqualTo(sceneName));
-            // TODO extract as givenScene
-
-            var objectId = "Grid";
-            var grid = findSingleObjectById(objectId);
-
-            AssertIsVisible(grid, objectId);
-            // open question: Do we need to test the size of the grid?
-            // Definitely not test the colour of the grid.
         }
 
         private static GameObject findSingleObjectById(string objectId)
@@ -49,21 +51,32 @@ namespace IntegrationTest {
             Assert.That(gameObject.activeInHierarchy, objectId + ".activeInHierarchy");
         }
 
+        [UnityTest]
+        public IEnumerator TestTronIsOnGridOnStartup()
+        {
+            yield return GivenScene("MainScene");
+
+            // yield return new WaitForEndOfFrame();
+
+            const string objectId = "Tron";
+            var tron = findSingleObjectById(objectId);
+            AssertIsVisible(tron, objectId);
+//            assertThatSize(tron, ?);
+//            assertThatPosition(tron, ?);
+        }
+
         /*
         [UnityTest]
-        public IEnumerator TestTronIsOnGridAtStartingPosition()
+        public IEnumerator TestTronStartsRacing()
         {
-            yield assertSceneLoaded("MainScene");
+            yield return GivenScene("MainScene");
 
-            var tron = Object.FindObjectsOfType<Identifier>()
-                .Where(identifier => identifier.id == "Tron")
-                .Select(identifier => identifier.gameObject).
-                First();
+            StartRace();
+            // yield return new WaitForEndOfFrame();
 
-            Assert.NotNull(tron, "tron");
-            Assert.That(tron.activeInHierarchy, "tron.activeInHierarchy");
-            assertThatSize(tron, ?);
-            assertThatPosition(tron, ?);
+            const string objectId = "Tron";
+            var tron = findSingleObjectById(objectId);
+//            assertThat(tron, isDrving);
         }
         */
     }
