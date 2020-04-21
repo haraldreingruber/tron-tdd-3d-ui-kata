@@ -4,4 +4,8 @@ public class Tron : MonoBehaviour
 {
     public GameObject visualization;
     public GameObject interaction;
+
+    public void StartRace()
+    {
+    }
 }
