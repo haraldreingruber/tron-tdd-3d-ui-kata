@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 663769990}
   - component: {fileID: 663769989}
   - component: {fileID: 663769991}
+  - component: {fileID: 663769992}
   m_Layer: 0
   m_Name: Tron
   m_TagString: Untagged
@@ -225,7 +226,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualization: {fileID: 1869174820}
-  interaction: {fileID: 0}
+  racingInteraction: {fileID: 663769992}
+--- !u!114 &663769992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663769988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45430ef316814e978fa96163418bab77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

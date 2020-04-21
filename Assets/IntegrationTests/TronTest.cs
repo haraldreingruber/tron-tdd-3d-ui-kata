@@ -38,6 +38,7 @@ namespace IntegrationTests
         public IEnumerator StartsRacing()
         {
             yield return Given.Scene(this, "MainScene");
+
             const string objectId = "Tron";
             var tron = Find.SingleObjectById(objectId);
             var tronTransform = tron.transform;
@@ -57,8 +58,8 @@ namespace IntegrationTests
 
         /*
          * Test list
-         * - do not move unless start racing
-         * - speed or relative movement
+         * - do not move unless start racing - UI?
+         * - speed or relative movement - UI?
          * - leaves walls behind
          */
     }
