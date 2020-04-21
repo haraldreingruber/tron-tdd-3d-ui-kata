@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using Zenject;
 
-namespace IntegrationTest
+namespace IntegrationTests
 {
     public class TronTest : SceneTestFixture
     {
         [UnityTest]
-        public IEnumerator TestTronIsOnGridOnStartup()
+        public IEnumerator IsOnGridOnStartup()
         {
             yield return Given.Scene(this, "MainScene");
 
@@ -18,8 +18,8 @@ namespace IntegrationTest
             var tron = Find.SingleObjectById(objectId);
             AssertThat.IsVisible(tron, objectId);
             AssertIsTripleAsHigh(tron, objectId);
-//          assertThatSize(tron, ?);
-//          assertThatPosition(tron, ?);
+            // not assertThatSize(tron, ?);
+            // not assertThatPosition(tron, ?);
         }
 
         private static void AssertIsTripleAsHigh(GameObject gameObject, string objectId)
@@ -35,7 +35,7 @@ namespace IntegrationTest
         }
 
         [UnityTest]
-        public IEnumerator TestTronStartsRacing()
+        public IEnumerator StartsRacing()
         {
             yield return Given.Scene(this, "MainScene");
             const string objectId = "Tron";

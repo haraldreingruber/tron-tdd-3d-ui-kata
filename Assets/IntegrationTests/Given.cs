@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace IntegrationTest
+namespace IntegrationTests
 {
     public static class Given
     {

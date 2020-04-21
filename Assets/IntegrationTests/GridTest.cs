@@ -2,7 +2,7 @@
 using UnityEngine.TestTools;
 using Zenject;
 
-namespace IntegrationTest
+namespace IntegrationTests
 {
     public class GridTest : SceneTestFixture
     {
@@ -13,7 +13,7 @@ namespace IntegrationTest
         // (skip) 4. Assert.that("tron is at the 'correct' location)
 
         [UnityTest]
-        public IEnumerator TestGridExists()
+        public IEnumerator Exists()
         {
             yield return Given.Scene(this, "MainScene");
 

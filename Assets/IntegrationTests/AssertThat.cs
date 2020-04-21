@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 
-namespace IntegrationTest
+namespace IntegrationTests
 {
     public static class AssertThat
     {
