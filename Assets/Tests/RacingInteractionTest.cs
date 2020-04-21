@@ -1,52 +1,59 @@
 ﻿using System;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace Tests
 {
     public class RacingInteractionTest
     {
+        private RacingInteraction _racingInteraction;
+        private Transform _racerTransform;
+        private Vector3 _originalPosition;
+
+        [SetUp]
+        public void CreateRacer()
+        {
+            var racer = new GameObject();
+            _racingInteraction = racer.AddComponent<RacingInteraction>();
+            _racerTransform = racer.transform;
+            _originalPosition = CurrentPosition();
+        }
+
+        private Vector3 CurrentPosition()
+        {
+            return _racerTransform.position;
+        }
+
         [Test]
         public void StartsRacing()
         {
             // same test, no UI?
-            var tron = new GameObject();
-            var racingInteraction = tron.AddComponent<RacingInteraction>();
 
-            var tronTransform = tron.transform;
-            var originalPosition = tronTransform.position;
+            _racingInteraction.StartRace();
+            _racingInteraction.FixedUpdate();
 
-            racingInteraction.StartRace();
+            var newPosition = CurrentPosition();
+            Assert.That(newPosition.y, Is.EqualTo(_originalPosition.y));
+            Assert.That(Math.Abs(newPosition.z - _originalPosition.z), IsNotCloseToStart());
+        }
 
-            racingInteraction.FixedUpdate();
-            // ReSharper disable once Unity.InefficientPropertyAccess - position has changed
-            var newPosition = tronTransform.position;
-
-            Assert.That(newPosition.y, Is.EqualTo(originalPosition.y));
-            Assert.That(Math.Abs(newPosition.z - originalPosition.z), Is.GreaterThan(0.001f));
+        private static GreaterThanConstraint IsNotCloseToStart()
+        {
+            return Is.GreaterThan(0.001f);
         }
 
         [Test]
         public void StandsStillOnStartup()
         {
-            var tron = new GameObject();
-            var racingInteraction = tron.AddComponent<RacingInteraction>();
+            _racingInteraction.FixedUpdate();
 
-            var tronTransform = tron.transform;
-            var originalPosition = tronTransform.position;
-
-            racingInteraction.FixedUpdate();
-            // ReSharper disable once Unity.InefficientPropertyAccess - position has changed
-            var newPosition = tronTransform.position;
-
-            Assert.That(newPosition, Is.EqualTo(originalPosition));
+            Assert.That(CurrentPosition(), Is.EqualTo(_originalPosition));
         }
 
         /*
  * Test list
- * - do not move unless start racing - UI?
  * - speed or relative movement - UI?
- * - leaves walls behind
  */
     }
 }
