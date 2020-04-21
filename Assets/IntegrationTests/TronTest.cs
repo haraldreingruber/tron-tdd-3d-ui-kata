@@ -46,7 +46,7 @@ namespace IntegrationTests
 
             tronTransform.GetComponent<Tron>().StartRace();
 
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(2.0f); // TODO: remove time or replace with condition
             // ReSharper disable once Unity.InefficientPropertyAccess - position has changed
             var newPosition = tronTransform.position;
 
@@ -58,7 +58,6 @@ namespace IntegrationTests
 
         /*
          * Test list
-         * - do not move unless start racing - UI?
          * - speed or relative movement - UI?
          * - leaves walls behind
          */

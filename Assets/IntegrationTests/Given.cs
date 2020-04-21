@@ -13,7 +13,7 @@ namespace IntegrationTests
             yield return self.LoadScene(sceneName);
 
             // Wait a few seconds to ensure the scene starts correctly
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(2.0f);  // TODO: remove time or replace with condition
 
             var currentSceneName = SceneManager.GetActiveScene().name;
             Assert.That(currentSceneName, Is.EqualTo(sceneName));
