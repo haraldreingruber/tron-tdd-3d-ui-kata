@@ -35,7 +35,8 @@ namespace Tests
 
             var newPosition = CurrentPosition();
             Assert.That(newPosition.y, Is.EqualTo(_originalPosition.y));
-            Assert.That(Math.Abs(newPosition.z - _originalPosition.z), IsNotCloseToStart());
+            Assert.That(newPosition.x, Is.EqualTo(_originalPosition.x));
+            Assert.That(Distance(newPosition), IsNotCloseToStart());
         }
 
         private static GreaterThanConstraint IsNotCloseToStart()
@@ -51,9 +52,21 @@ namespace Tests
             Assert.That(CurrentPosition(), Is.EqualTo(_originalPosition));
         }
 
-        /*
- * Test list
- * - speed or relative movement - UI?
- */
+        [Test]
+        public void MovesWithGivenSpeed()
+        {
+            _racingInteraction.speedMeterPerSec = 5;
+            _racingInteraction.StartRace();
+
+            _racingInteraction.FixedUpdate(); // 0.02 seconds
+
+            var newPosition = CurrentPosition();
+            Assert.AreEqual(5 * Time.fixedDeltaTime, Distance(newPosition), 0.0001f);
+        }
+
+        private float Distance(Vector3 newPosition)
+        {
+            return Math.Abs(newPosition.z - _originalPosition.z);
+        }
     }
 }

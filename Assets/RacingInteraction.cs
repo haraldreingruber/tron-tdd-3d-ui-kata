@@ -3,6 +3,7 @@
 public class RacingInteraction : MonoBehaviour
 {
     private const float SPEED_IN_METER_PER_S = 1.0f;
+    public float speedMeterPerSec = SPEED_IN_METER_PER_S;
 
     public void StartRace()
     {
@@ -15,7 +16,7 @@ public class RacingInteraction : MonoBehaviour
     {
         if (IsRacing)
         {
-            transform.position += Vector3.forward * (SPEED_IN_METER_PER_S * Time.fixedDeltaTime);
+            transform.position += Vector3.forward * (speedMeterPerSec * Time.fixedDeltaTime);
         }
     }
 }
