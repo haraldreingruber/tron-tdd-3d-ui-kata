@@ -1,5 +1,8 @@
 ﻿{
     "name": "Tests",
+    "references": [
+        "Tron"
+    ],
     "optionalUnityReferences": [
         "TestAssemblies"
     ],
