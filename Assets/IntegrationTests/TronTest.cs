@@ -44,8 +44,8 @@ namespace IntegrationTests
             var tronTransform = tron.transform;
             var originalPosition = tronTransform.position;
 
+            // was tronTransform.GetComponent<Tron>().StartRace();
             clickStartButton();
-            //tronTransform.GetComponent<Tron>().StartRace(); // TODO click button
 
             var distance = 0.0f;
             var newPosition = originalPosition;
@@ -66,11 +66,7 @@ namespace IntegrationTests
         {
             var buttonObject = Find.SingleObjectById("StartButton");
             var button = buttonObject.GetComponent<Button>();
-            button.Select();
-
-            // Button button = wherever();
-            // assertButtonVisible
-            // buttno.click();
+            button.onClick.Invoke();
         }
 
         /*
