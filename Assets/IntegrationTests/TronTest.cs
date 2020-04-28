@@ -46,7 +46,7 @@ namespace IntegrationTests
             var originalPosition = tronTransform.position;
 
             // was tronTransform.GetComponent<Tron>().StartRace();
-            clickStartButton();
+            ClickStartButton();
 
             var distance = 0.0f;
             var newPosition = originalPosition;
@@ -63,26 +63,64 @@ namespace IntegrationTests
             Assert.That(distance, Is.GreaterThan(someDistance));
         }
 
-        private void clickStartButton()
+        private void ClickStartButton()
         {
             var buttonObject = Find.SingleObjectById("StartButton");
             var button = buttonObject.GetComponent<Button>();
             var buttonTransform = buttonObject.GetComponent<RectTransform>();
             //button.onClick.Invoke();
 
-            var buttonCorners = new Vector3[4];
-            buttonTransform.GetWorldCorners(buttonCorners);
-            var buttonCenter = Vector3.Lerp(buttonCorners[0], buttonCorners[2], 0.5f);
-
             var pointer = new PointerEventData(EventSystem.current);
             ExecuteEvents.Execute(buttonObject, pointer, ExecuteEvents.pointerClickHandler);
         }
 
         /*
-         * TODO Test list
-         * - button or click starts game/racing
+         * TODO Test /Feature list
+         * - button disappears after click
+         * - camera follows the racer
          * - leaves walls behind
+         * - change direction (racer and walls)
+         * - boundary walls
+         * - collision/death/game over
+         * - score
+         * - AI enemies
          * TODO review all tests if we could get away without UI?
          */
+
+        /*
+         * Idea:
+         * we start with a TrailInteraction
+         * - knows current trail wall behind, creates it and such knows it
+         * - creates new wall behind us length 0 from prefab, different game object
+         *   - wall is half thickness, full height, different colour (styling, no test)
+         * - when move the wall gets longer
+         *   - holt distanz von seinem game object seit letztem update und update its current trail
+         *
+         * Tests
+         * - startRace = new instance -> there is trail instance length 0 at fixed coordinates
+         * - update -> length is increased by x (unit)
+         */
+
+        [UnityTest]
+        public IEnumerator LeavesTrailWhenStartRacing()
+        {
+            yield return Given.Scene(this, "MainScene");
+
+            var tron = Find.SingleObjectById("Tron");
+            var tronTransform = tron.transform;
+            var originalPosition = tronTransform.position;
+
+            tronTransform.GetComponent<Tron>().StartRace();
+            yield return new WaitForEndOfFrame();
+
+            // TODO assert there is a wall behind us:
+            // z == originalPosition.z + 0.5
+            // y == originalPosition.y + 0
+            // x == originalPosition.x + 0
+            // width == tron.width * 0.5
+            // height == tron.height * 1
+            // length == <= 0.02
+        }
+
     }
 }
