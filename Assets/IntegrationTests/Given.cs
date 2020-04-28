@@ -12,10 +12,19 @@ namespace IntegrationTests
         {
             yield return self.LoadScene(sceneName);
 
+            var currentSceneName = "";
             // Wait a few seconds to ensure the scene starts correctly
-            yield return new WaitForSeconds(2.0f);  // TODO: remove time or replace with condition
+            for (int i = 0; i < 20; i++)
+            {
+                yield return new WaitForSeconds(0.1f);
+                currentSceneName = SceneManager.GetActiveScene().name;
+                if (currentSceneName == sceneName)
+                {
+                    break;
+                }
+            }
+            //yield return new WaitForSeconds(2.0f);  // TODO: remove time or replace with condition
 
-            var currentSceneName = SceneManager.GetActiveScene().name;
             Assert.That(currentSceneName, Is.EqualTo(sceneName));
         }
     }
