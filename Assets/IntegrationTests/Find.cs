@@ -12,7 +12,7 @@ namespace IntegrationTests
                 .Where(identifier => identifier.id == objectId)
                 .Select(identifier => identifier.gameObject)
                 .ToList();
-            Assert.That(gameObjects.Count, Is.EqualTo(1));
+            Assert.That(gameObjects.Count, Is.EqualTo(1), $"Object {objectId} not found");
             return gameObjects[0];
         }
     }

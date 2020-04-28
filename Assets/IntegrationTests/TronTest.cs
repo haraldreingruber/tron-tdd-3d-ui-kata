@@ -3,6 +3,7 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
 using Zenject;
 
 namespace IntegrationTests
@@ -35,19 +36,19 @@ namespace IntegrationTests
         }
 
         [UnityTest]
-        public IEnumerator StartsRacing()
+        public IEnumerator StartsRacingOnButtonClick()
         {
             yield return Given.Scene(this, "MainScene");
 
-            const string objectId = "Tron";
-            var tron = Find.SingleObjectById(objectId);
+            var tron = Find.SingleObjectById("Tron");
             var tronTransform = tron.transform;
             var originalPosition = tronTransform.position;
 
-            tronTransform.GetComponent<Tron>().StartRace();
+            clickStartButton();
+            //tronTransform.GetComponent<Tron>().StartRace(); // TODO click button
+
             var distance = 0.0f;
             var newPosition = originalPosition;
-
             var someDistance = 0.5f;
             yield return new WaitUntilOrTimeout(() =>
             {
@@ -61,9 +62,22 @@ namespace IntegrationTests
             Assert.That(distance, Is.GreaterThan(someDistance));
         }
 
+        private void clickStartButton()
+        {
+            var buttonObject = Find.SingleObjectById("StartButton");
+            var button = buttonObject.GetComponent<Button>();
+            button.Select();
+
+            // Button button = wherever();
+            // assertButtonVisible
+            // buttno.click();
+        }
+
         /*
          * TODO Test list
+         * - button or click starts game/racing
          * - leaves walls behind
+         * TODO review all tests if we could get away without UI?
          */
     }
 }
