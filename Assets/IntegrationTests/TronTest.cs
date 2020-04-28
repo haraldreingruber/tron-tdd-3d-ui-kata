@@ -39,6 +39,8 @@ namespace IntegrationTests
         [UnityTest]
         public IEnumerator StartsRacingOnButtonClick()
         {
+            Time.timeScale = 10.0f; // TODO: move to SetUp Method/Test Helper
+
             yield return Given.Scene(this, "MainScene");
 
             var tron = Find.SingleObjectById("Tron");
