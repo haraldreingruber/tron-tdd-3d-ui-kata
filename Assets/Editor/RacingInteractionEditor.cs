@@ -8,8 +8,10 @@ namespace Editor
     {
         // idea taken from: https://docs.unity3d.com/Manual/editor-CustomEditors.html
 
-        public override void OnInspectorGUI() // TODO: use CreateInspectorGUI instead https://docs.unity3d.com/ScriptReference/Editor.CreateInspectorGUI.html
+        public override void OnInspectorGUI()
         {
+            // TODO: use CreateInspectorGUI instead for new API of editor
+            // https://docs.unity3d.com/ScriptReference/Editor.CreateInspectorGUI.html
             base.OnInspectorGUI();
 
             if (GUILayout.Button("Start Racing"))

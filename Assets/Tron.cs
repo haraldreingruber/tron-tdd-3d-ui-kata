@@ -2,8 +2,9 @@
 
 public class Tron : MonoBehaviour
 {
+    // TODO maybe refactor to use Tron component instead of GameObject here
     public GameObject visualization;
-    // public GameObject interaction;
+
     public RacingInteraction racingInteraction;
 
     public void StartRace()

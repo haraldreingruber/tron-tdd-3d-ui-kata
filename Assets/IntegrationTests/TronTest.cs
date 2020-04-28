@@ -54,11 +54,8 @@ namespace IntegrationTests
             Assert.That(Math.Abs(newPosition.z - originalPosition.z), Is.GreaterThan(1.0f));
         }
 
-        // TODO maybe refactor to use Tron component instead of GameObject in all places
-
         /*
-         * Test list
-         * - speed or relative movement - UI?
+         * TODO Test list
          * - leaves walls behind
          */
     }
