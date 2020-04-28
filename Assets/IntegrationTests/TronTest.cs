@@ -2,6 +2,7 @@
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 using Zenject;
@@ -66,7 +67,15 @@ namespace IntegrationTests
         {
             var buttonObject = Find.SingleObjectById("StartButton");
             var button = buttonObject.GetComponent<Button>();
-            button.onClick.Invoke();
+            var buttonTransform = buttonObject.GetComponent<RectTransform>();
+            //button.onClick.Invoke();
+
+            var buttonCorners = new Vector3[4];
+            buttonTransform.GetWorldCorners(buttonCorners);
+            var buttonCenter = Vector3.Lerp(buttonCorners[0], buttonCorners[2], 0.5f);
+
+            var pointer = new PointerEventData(EventSystem.current);
+            ExecuteEvents.Execute(buttonObject, pointer, ExecuteEvents.pointerClickHandler);
         }
 
         /*
