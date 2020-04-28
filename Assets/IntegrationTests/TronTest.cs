@@ -45,13 +45,20 @@ namespace IntegrationTests
             var originalPosition = tronTransform.position;
 
             tronTransform.GetComponent<Tron>().StartRace();
+            var distance = 0.0f;
+            var newPosition = originalPosition;
 
-            yield return new WaitForSeconds(2.0f); // TODO: remove time or replace with condition
-            // ReSharper disable once Unity.InefficientPropertyAccess - position has changed
-            var newPosition = tronTransform.position;
+            var someDistance = 0.5f;
+            yield return new WaitUntilOrTimeout(() =>
+            {
+                // ReSharper disable once Unity.InefficientPropertyAccess - position has changed
+                newPosition = tronTransform.position;
+                distance = Math.Abs(newPosition.z - originalPosition.z);
+                return distance >= someDistance;
+            }, 2.0f);
 
             Assert.That(newPosition.y, Is.EqualTo(originalPosition.y));
-            Assert.That(Math.Abs(newPosition.z - originalPosition.z), Is.GreaterThan(1.0f));
+            Assert.That(distance, Is.GreaterThan(someDistance));
         }
 
         /*
