@@ -39,7 +39,7 @@ namespace IntegrationTests
         [UnityTest]
         public IEnumerator StartsRacingOnButtonClick()
         {
-            Time.timeScale = 10.0f; // TODO: move to SetUp Method/Test Helper
+            Time.timeScale = 10.0f;
 
             yield return Given.Scene(this, "MainScene");
 
