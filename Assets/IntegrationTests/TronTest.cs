@@ -123,14 +123,14 @@ namespace IntegrationTests
         {
             yield return Given.Scene(this, "MainScene");
             var tron = Find.SingleObjectById("Tron");
-            var originalTronBackBorder = GetBackBorder(tron);
+            var originalTronBackBorder = GeometryUtils.GetBackBorder(tron);
 
             var tronTransform = tron.transform;
             tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
 
             var trail = Find.SingleObjectById("Trail");
-            var trailBackBorder = GetBackBorder(trail);
+            var trailBackBorder = GeometryUtils.GetBackBorder(trail);
             Assert.That(trailBackBorder, Is.EqualTo(originalTronBackBorder), "trailBackBorder");
         }
 
@@ -139,7 +139,7 @@ namespace IntegrationTests
         {
             yield return Given.Scene(this, "MainScene");
             var tron = Find.SingleObjectById("Tron");
-            var originalTronBackBorder = GetBackBorder(tron);
+            var originalTronBackBorder = GeometryUtils.GetBackBorder(tron);
 
             var tronTransform = tron.transform;
             tronTransform.GetComponent<Tron>().StartRace();
@@ -149,35 +149,19 @@ namespace IntegrationTests
             yield return new WaitForEndOfFrame();
             yield return new WaitForEndOfFrame();
 
-            var currentTronBackBorder = GetBackBorder(tron);
+            var currentTronBackBorder = GeometryUtils.GetBackBorder(tron);
             var trail = Find.SingleObjectById("Trail");
             // still at same back position
-            var trailBackBorder = GetBackBorder(trail);
+            var trailBackBorder = GeometryUtils.GetBackBorder(trail);
             Assert.That(trailBackBorder, Is.EqualTo(originalTronBackBorder), "trailBackBorder");
-            var trailFrontBorder = GetFrontBorder(trail);
+            var trailFrontBorder = GeometryUtils.GetFrontBorder(trail);
             Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder), "trailFrontBorder");
         }
 
         // TODO assert there is a wall behind us:
+        // Extract TrailTests.cs
+        // trail Border Compare with Delta
         // width == tron.width * 0.5
         // height == tron.height * 1
-
-        private Vector3 GetBackBorder(GameObject obj)
-        {
-            var transform = obj.transform;
-            var position = transform.position;
-            var scale = transform.localScale;
-
-            return position + (Vector3.back * scale.z / 2.0f);
-        }
-
-        private Vector3 GetFrontBorder(GameObject obj)
-        {
-            var transform = obj.transform;
-            var position = transform.position;
-            var scale = transform.localScale;
-
-            return position + (Vector3.forward * scale.z / 2.0f);
-        }
     }
 }
