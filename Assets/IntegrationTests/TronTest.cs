@@ -122,6 +122,8 @@ namespace IntegrationTests
             // width == tron.width * 0.5
             // height == tron.height * 1
             // length == <= 0.02
+            var trail = Find.SingleObjectById("Trail");
+            AssertThat.IsVisible(trail, "Trail" + "visible");
         }
 
     }

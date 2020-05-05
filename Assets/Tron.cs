@@ -6,9 +6,11 @@ public class Tron : MonoBehaviour
     public GameObject visualization;
 
     public RacingInteraction racingInteraction;
+    public TrailProducer trailProducer;
 
     public void StartRace()
     {
         racingInteraction.StartRace();
+        trailProducer.StartProducing();
     }
 }
