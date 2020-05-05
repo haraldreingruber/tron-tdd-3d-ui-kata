@@ -2,7 +2,7 @@
 
 public static class GeometryUtils
 {
-    public static Vector3 GetBackBorder(GameObject obj) // TODO: dup with Test
+    public static Vector3 GetBackBorder(GameObject obj)
     {
         var transform = obj.transform;
         var position = transform.position;

@@ -8,7 +8,8 @@ namespace IntegrationTests
         private readonly Func<bool> m_Predicate;
         private readonly float m_Timeout;
 
-        public override bool keepWaiting => Time.time < m_Timeout && !m_Predicate(); // TODO Do we need to fail if timeout reached?
+        public override bool keepWaiting => Time.time < m_Timeout && !m_Predicate();
+        // TODO (testing) - throw TimeoutException if timeout reached
 
         public WaitUntilOrTimeout(Func<bool> predicate, float timeoutSeconds)
         {

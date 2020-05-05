@@ -2,7 +2,7 @@
 
 public class Tron : MonoBehaviour
 {
-    // TODO maybe refactor to use Tron component instead of GameObject here
+    // TODO (Unity design) - refactor to use Tron component instead of GameObject here
     public GameObject visualization;
 
     public RacingInteraction racingInteraction;

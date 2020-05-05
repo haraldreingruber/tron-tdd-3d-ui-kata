@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Editor
 {
+    // TODO (usability) - change Editor to be Tron editor to start Trail as well. Now we have the button so we do not need it any more.
     [CustomEditor(typeof(RacingInteraction))]
     public class RacingInteractionEditor : UnityEditor.Editor
     {
@@ -10,7 +11,7 @@ namespace Editor
 
         public override void OnInspectorGUI()
         {
-            // TODO: use CreateInspectorGUI instead for new API of editor
+            // TODO (Unity API) - use CreateInspectorGUI instead for new API of editor
             // https://docs.unity3d.com/ScriptReference/Editor.CreateInspectorGUI.html
             base.OnInspectorGUI();
 

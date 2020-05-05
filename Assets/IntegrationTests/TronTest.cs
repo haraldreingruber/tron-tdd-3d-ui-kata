@@ -78,30 +78,7 @@ namespace IntegrationTests
         }
 
         /*
-         * TODO Test /Feature list
-         * - button disappears after click
-         * - camera follows the racer
-         * - leaves walls behind
-         * - change direction (racer and walls)
-         * - boundary walls
-         * - collision/death/game over
-         * - score
-         * - AI enemies
-         * TODO review all tests if we could get away without UI?
-         */
-
-        /*
-         * Idea:
-         * we start with a TrailInteraction
-         * - knows current trail wall behind, creates it and such knows it
-         * - creates new wall behind us length 0 from prefab, different game object
-         *   - wall is half thickness, full height, different colour (styling, no test)
-         * - when move the wall gets longer
-         *   - holt distanz von seinem game object seit letztem update und update its current trail
-         *
-         * Tests
-         * - startRace = new instance -> there is trail instance length 0 at fixed coordinates
-         * - update -> length is increased by x (unit)
+         * TODO (refactor) - move Trail relevant tests to TrailTest?
          */
 
         [UnityTest]
@@ -153,14 +130,13 @@ namespace IntegrationTests
             var trail = Find.SingleObjectById("Trail");
             // still at same back position
             var trailBackBorder = GeometryUtils.GetBackBorder(trail);
+            // TODO (testing) - assert with deldta, create Matcher for Vector3 with delta
             Assert.That(trailBackBorder, Is.EqualTo(originalTronBackBorder), "trailBackBorder");
             var trailFrontBorder = GeometryUtils.GetFrontBorder(trail);
             Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder), "trailFrontBorder");
         }
 
-        // TODO assert there is a wall behind us:
-        // Extract TrailTests.cs
-        // trail Border Compare with Delta
+        // TODO 1. (continue tests) - open asserts Wall -> see the wall for fun
         // width == tron.width * 0.5
         // height == tron.height * 1
     }
