@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
@@ -104,27 +105,79 @@ namespace IntegrationTests
          */
 
         [UnityTest]
-        public IEnumerator LeavesTrailWhenStartRacing()
+        public IEnumerator CreatesTrailWhenStartRacing()
         {
             yield return Given.Scene(this, "MainScene");
-
             var tron = Find.SingleObjectById("Tron");
-            var tronTransform = tron.transform;
-            var originalPosition = tronTransform.position;
 
+            var tronTransform = tron.transform;
             tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
 
-            // TODO assert there is a wall behind us:
-            // z == originalPosition.z + 0.5
-            // y == originalPosition.y + 0
-            // x == originalPosition.x + 0
-            // width == tron.width * 0.5
-            // height == tron.height * 1
-            // length == <= 0.02
             var trail = Find.SingleObjectById("Trail");
             AssertThat.IsVisible(trail, "Trail" + "visible");
         }
 
+        [UnityTest]
+        public IEnumerator TrailBackBorderIsCreatedAtTronBackBorder()
+        {
+            yield return Given.Scene(this, "MainScene");
+            var tron = Find.SingleObjectById("Tron");
+            var originalTronBackBorder = GetBackBorder(tron);
+
+            var tronTransform = tron.transform;
+            tronTransform.GetComponent<Tron>().StartRace();
+            yield return new WaitForEndOfFrame();
+
+            var trail = Find.SingleObjectById("Trail");
+            var trailBackBorder = GetBackBorder(trail);
+            Assert.That(trailBackBorder, Is.EqualTo(originalTronBackBorder), "trailBackBorder");
+        }
+
+        [UnityTest]
+        public IEnumerator TrailGetsLongerDuringRace()
+        {
+            yield return Given.Scene(this, "MainScene");
+            var tron = Find.SingleObjectById("Tron");
+            var originalTronBackBorder = GetBackBorder(tron);
+
+            var tronTransform = tron.transform;
+            tronTransform.GetComponent<Tron>().StartRace();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+
+            var currentTronBackBorder = GetBackBorder(tron);
+            var trail = Find.SingleObjectById("Trail");
+            // still at same back position
+            var trailBackBorder = GetBackBorder(trail);
+            Assert.That(trailBackBorder, Is.EqualTo(originalTronBackBorder), "trailBackBorder");
+            var trailFrontBorder = GetFrontBorder(trail);
+            Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder), "trailFrontBorder");
+        }
+
+        // TODO assert there is a wall behind us:
+        // width == tron.width * 0.5
+        // height == tron.height * 1
+
+        private Vector3 GetBackBorder(GameObject obj)
+        {
+            var transform = obj.transform;
+            var position = transform.position;
+            var scale = transform.localScale;
+
+            return position + (Vector3.back * scale.z / 2.0f);
+        }
+
+        private Vector3 GetFrontBorder(GameObject obj)
+        {
+            var transform = obj.transform;
+            var position = transform.position;
+            var scale = transform.localScale;
+
+            return position + (Vector3.forward * scale.z / 2.0f);
+        }
     }
 }
