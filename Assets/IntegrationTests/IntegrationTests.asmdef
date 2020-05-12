@@ -2,6 +2,8 @@
     "name": "IntegrationTests",
     "references": [
         "UnityEngine.TestRunner",
+        "Unity.InputSystem",
+        "Unity.InputSystem.TestFramework",
         "Zenject-TestFramework",
         "Tron"
     ],

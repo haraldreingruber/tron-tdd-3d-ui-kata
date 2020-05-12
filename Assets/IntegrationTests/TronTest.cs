@@ -186,43 +186,6 @@ namespace IntegrationTests
             Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder), "trailFrontBorder");
         }
 
-        // TODO test: ignore keys before start race
-
-        class RacingInteractionMock : RacingInteraction
-        {
-            private bool _turnRightHasBeenCalled;
-            public bool TurnRightHasBeenCalled()
-            {
-                return _turnRightHasBeenCalled;
-            }
-
-            public override void TurnRight()
-            {
-                _turnRightHasBeenCalled = true;
-            }
-
-            public override void FixedUpdate()
-            {
-            }
-        }
-
-        [UnityTest]
-        public IEnumerator FacesRightAfterTurnRight()
-        {
-            yield return Given.Scene(this, "MainScene");
-            var tron = Find.SingleObjectById("Tron");
-            var tronTransform = tron.transform;
-            RacingInteractionMock racingInteraction = tron.AddComponent<RacingInteractionMock>();
-            tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
-            tronTransform.GetComponent<Tron>().StartRace();
-            yield return new WaitForEndOfFrame();
-
-            yield return Interact.Press('d');
-            yield return new WaitForEndOfFrame();
-
-            Assert.That(racingInteraction.TurnRightHasBeenCalled());
-        }
-
         /*
         [UnityTest]
         public IEnumerator FacesRightAfterTurnRight()
