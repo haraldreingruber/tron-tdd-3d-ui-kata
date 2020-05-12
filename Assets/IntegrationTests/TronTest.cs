@@ -50,6 +50,7 @@ namespace IntegrationTests
 
             // Tron internally is aligned that its base is the bottom
             // Do we write a test for that or edit in the editor? Seems like Gui fiddeling?
+            // Assert trail is internally aligned that its base is the bottom - manual
 
             // Grid plane is also at 0
             var grid = Find.SingleObjectById("Grid");
@@ -131,7 +132,22 @@ namespace IntegrationTests
         }
 
         [UnityTest]
-        public IEnumerator TrailGetsLongerDuringRace()
+        public IEnumerator TrailBottomIsCreatedAtTronBottom()
+        {
+            yield return Given.Scene(this, "MainScene");
+            var tron = Find.SingleObjectById("Tron");
+
+            var tronTransform = tron.transform;
+            tronTransform.GetComponent<Tron>().StartRace();
+            yield return new WaitForEndOfFrame();
+
+            var trail = Find.SingleObjectById("Trail");
+            Assert.That(trail.transform.position.y, Is.EqualTo(tronTransform.position.y), "trail.y");
+            // Assert trail is internally aligned that its base is the bottom - manual
+        }
+
+        [UnityTest]
+        public IEnumerator TrailGetsLongerDuringRace_blinking()
         {
             yield return Given.Scene(this, "MainScene");
             var tron = Find.SingleObjectById("Tron");
