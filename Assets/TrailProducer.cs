@@ -24,7 +24,9 @@ public class TrailProducer : MonoBehaviour
         currentTrail = Instantiate(trailPrefab, trailsContainer.transform);
         var currentTrailTransform = currentTrail.transform;
         currentTrailTransform.position = _parentBackBorder;
-        currentTrailTransform.localScale = new Vector3(1, 1, 0.0f);
+
+        var parentScale = transform.localScale;
+        currentTrailTransform.localScale = new Vector3(parentScale.x / 2.0f, parentScale.y, 0.0f);
     }
 
     private void Update()
@@ -36,7 +38,9 @@ public class TrailProducer : MonoBehaviour
         var newLength = (currentParentBackBorder - _parentBackBorder).z;
         var currentTrailTransform = currentTrail.transform;
         currentTrailTransform.position = _parentBackBorder + Vector3.forward * (newLength / 2.0f);
-        currentTrailTransform.localScale = new Vector3(1, 1, newLength);
+        var localScale = currentTrailTransform.localScale;
+        localScale.z = newLength;
+        currentTrailTransform.localScale = localScale;
     }
 }
 

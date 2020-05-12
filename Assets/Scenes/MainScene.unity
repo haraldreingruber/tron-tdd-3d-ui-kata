@@ -678,6 +678,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4344017208043655194, guid: 70477dae2be382449ae32a77c8d42d9d,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4344017208043655195, guid: 70477dae2be382449ae32a77c8d42d9d,
         type: 3}
       propertyPath: trailProducer

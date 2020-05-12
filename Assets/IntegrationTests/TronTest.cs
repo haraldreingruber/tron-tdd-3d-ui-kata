@@ -132,6 +132,21 @@ namespace IntegrationTests
         }
 
         [UnityTest]
+        public IEnumerator TrailHeightIsTronHeightAndHalfWidth()
+        {
+            yield return Given.Scene(this, "MainScene");
+            var tron = Find.SingleObjectById("Tron");
+
+            var tronTransform = tron.transform;
+            tronTransform.GetComponent<Tron>().StartRace();
+            yield return new WaitForEndOfFrame();
+
+            var trail = Find.SingleObjectById("Trail");
+            Assert.That(trail.transform.localScale.y, Is.EqualTo(tronTransform.localScale.y), "trail height");
+            Assert.That(trail.transform.localScale.x, Is.EqualTo(tronTransform.localScale.x/2), "trail width");
+        }
+
+        [UnityTest]
         public IEnumerator TrailBottomIsCreatedAtTronBottom()
         {
             yield return Given.Scene(this, "MainScene");
@@ -156,7 +171,7 @@ namespace IntegrationTests
             var tronTransform = tron.transform;
             tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame(); // TODO (testing) find minimum frame for movement
             yield return new WaitForEndOfFrame();
             yield return new WaitForEndOfFrame();
             yield return new WaitForEndOfFrame();
@@ -170,9 +185,5 @@ namespace IntegrationTests
             var trailFrontBorder = GeometryUtils.GetFrontBorder(trail);
             Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder), "trailFrontBorder");
         }
-
-        // TODO 1. (continue tests) - open asserts Wall -> see the wall for fun
-        // width == tron.width * 0.5
-        // height == tron.height * 1
     }
 }
