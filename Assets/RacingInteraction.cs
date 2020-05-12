@@ -5,14 +5,19 @@ public class RacingInteraction : MonoBehaviour
     private const float SPEED_IN_METER_PER_S = 1.0f;
     public float speedMeterPerSec = SPEED_IN_METER_PER_S;
 
-    public void StartRace()
+    public virtual void StartRace()
     {
         IsRacing = true;
     }
 
     private bool IsRacing { get; set; }
 
-    public void FixedUpdate()
+    public virtual void TurnRight()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public virtual void FixedUpdate()
     {
         if (IsRacing)
         {
