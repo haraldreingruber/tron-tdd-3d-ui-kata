@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
+using UnityEngine.TestTools.Utils;
 using UnityEngine.UI;
 using Zenject;
 
@@ -158,7 +159,7 @@ namespace IntegrationTests
         }
 
         [UnityTest]
-        public IEnumerator TrailGetsLongerDuringRace_blinking()
+        public IEnumerator TrailGetsLongerDuringRace()
         {
             yield return Given.Scene(this, "MainScene");
             var tron = Find.SingleObjectById("Tron");
@@ -175,10 +176,11 @@ namespace IntegrationTests
             var trail = Find.SingleObjectById("Trail");
             // still at same back position
             var trailBackBorder = GeometryUtils.GetBackBorder(trail);
-            // TODO (testing) - assert with delta, create Matcher for Vector3 with delta
-            Assert.That(trailBackBorder, Is.EqualTo(originalTronBackBorder), "trailBackBorder");
+
+            var comparer = new Vector3EqualityComparer(0.0001f);
+            Assert.That(trailBackBorder, Is.EqualTo(originalTronBackBorder).Using(comparer), "trailBackBorder");
             var trailFrontBorder = GeometryUtils.GetFrontBorder(trail);
-            Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder), "trailFrontBorder");
+            Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder).Using(comparer), "trailFrontBorder");
         }
 
         [Ignore("next next test")]

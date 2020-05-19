@@ -61,7 +61,7 @@ namespace Tests
             _racingInteraction.FixedUpdate(); // 0.02 seconds
 
             var newPosition = CurrentPosition();
-            Assert.AreEqual(5 * Time.fixedDeltaTime, Distance(newPosition), 0.0001f);
+            Assert.That(Distance(newPosition), Is.EqualTo(5 * Time.fixedDeltaTime).Within(0.0001f));
         }
 
         private float Distance(Vector3 newPosition)
