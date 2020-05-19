@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -71,17 +71,19 @@ namespace IntegrationTests
             // was tronTransform.GetComponent<Tron>().StartRace();
             ClickStartButton();
 
+            // TODO: extract into helper object
             var distance = 0.0f;
-            var newPosition = originalPosition;
-            var someDistance = 0.5f;
+            var originalPosition2 = tronTransform.position;
+            const float someDistance = 0.5f;
             yield return new WaitUntilOrTimeout(() =>
             {
                 // ReSharper disable once Unity.InefficientPropertyAccess - position has changed
-                newPosition = tronTransform.position;
-                distance = Math.Abs(newPosition.z - originalPosition.z);
+                var newPosition2 = tronTransform.position;
+                distance = Math.Abs(newPosition2.z - originalPosition2.z);
                 return distance >= someDistance;
             }, 2.0f);
 
+            var newPosition = tronTransform.position;
             Assert.That(newPosition.y, Is.EqualTo(originalPosition.y));
             Assert.That(distance, Is.GreaterThan(someDistance));
         }
@@ -171,10 +173,6 @@ namespace IntegrationTests
             var tronTransform = tron.transform;
             tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame(); // TODO (testing) find minimum frame for movement
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
 
             var currentTronBackBorder = GeometryUtils.GetBackBorder(tron);
             var trail = Find.SingleObjectById("Trail");
@@ -184,6 +182,7 @@ namespace IntegrationTests
             Assert.That(trailBackBorder, Is.EqualTo(originalTronBackBorder), "trailBackBorder");
             var trailFrontBorder = GeometryUtils.GetFrontBorder(trail);
             Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder), "trailFrontBorder");
+            // TODO: also works if tron didn't start!!!
         }
 
         /*
