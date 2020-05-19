@@ -71,21 +71,13 @@ namespace IntegrationTests
             // was tronTransform.GetComponent<Tron>().StartRace();
             ClickStartButton();
 
-            // TODO: extract into helper object
-            var distance = 0.0f;
-            var originalPosition2 = tronTransform.position;
             const float someDistance = 0.5f;
-            yield return new WaitUntilOrTimeout(() =>
-            {
-                // ReSharper disable once Unity.InefficientPropertyAccess - position has changed
-                var newPosition2 = tronTransform.position;
-                distance = Math.Abs(newPosition2.z - originalPosition2.z);
-                return distance >= someDistance;
-            }, 2.0f);
+            var waiter = new ObjectMovedPredicate(tronTransform, someDistance);
+            yield return new WaitUntilOrTimeout(waiter.HasMoved, 2.0f);
 
             var newPosition = tronTransform.position;
             Assert.That(newPosition.y, Is.EqualTo(originalPosition.y));
-            Assert.That(distance, Is.GreaterThan(someDistance));
+            Assert.That(waiter.CurrentDistance, Is.GreaterThan(someDistance));
         }
 
         private void ClickStartButton()
