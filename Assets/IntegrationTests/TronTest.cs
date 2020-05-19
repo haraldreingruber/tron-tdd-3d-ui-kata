@@ -164,7 +164,8 @@ namespace IntegrationTests
 
             var tronTransform = tron.transform;
             tronTransform.GetComponent<Tron>().StartRace();
-            yield return new WaitForEndOfFrame();
+            var waiter = new ObjectMovedPredicate(tronTransform, 0.5f);
+            yield return new WaitUntilOrTimeout(waiter.HasMoved, 2.0f);
 
             var currentTronBackBorder = GeometryUtils.GetBackBorder(tron);
             var trail = Find.SingleObjectById("Trail");
@@ -174,7 +175,6 @@ namespace IntegrationTests
             Assert.That(trailBackBorder, Is.EqualTo(originalTronBackBorder), "trailBackBorder");
             var trailFrontBorder = GeometryUtils.GetFrontBorder(trail);
             Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder), "trailFrontBorder");
-            // TODO: also works if tron didn't start!!!
         }
 
         /*
