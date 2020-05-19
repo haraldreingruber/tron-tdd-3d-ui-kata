@@ -72,12 +72,14 @@ namespace IntegrationTests
             ClickStartButton();
 
             const float someDistance = 0.5f;
-            var waiter = new ObjectMovedPredicate(tronTransform, someDistance);
-            yield return new WaitUntilOrTimeout(waiter.HasMoved, 2.0f);
+            var tronMoved = new ObjectMovedPredicate(tronTransform, someDistance);
+            var waiter = new WaitUntilOrTimeout(tronMoved.HasMoved, 2.0f);
+            yield return waiter;
+            waiter.AssertTimeoutWasNotReached("move of Tron");
 
             var newPosition = tronTransform.position;
             Assert.That(newPosition.y, Is.EqualTo(originalPosition.y));
-            Assert.That(waiter.CurrentDistance, Is.GreaterThan(someDistance));
+            Assert.That(tronMoved.CurrentDistance, Is.GreaterThan(someDistance));
         }
 
         private void ClickStartButton()
@@ -164,8 +166,10 @@ namespace IntegrationTests
 
             var tronTransform = tron.transform;
             tronTransform.GetComponent<Tron>().StartRace();
-            var waiter = new ObjectMovedPredicate(tronTransform, 0.5f);
-            yield return new WaitUntilOrTimeout(waiter.HasMoved, 2.0f);
+            var tronMoved = new ObjectMovedPredicate(tronTransform, 0.5f);
+            var waiter = new WaitUntilOrTimeout(tronMoved.HasMoved, 2.0f);
+            yield return waiter;
+            waiter.AssertTimeoutWasNotReached("move of Tron");
 
             var currentTronBackBorder = GeometryUtils.GetBackBorder(tron);
             var trail = Find.SingleObjectById("Trail");
@@ -177,7 +181,7 @@ namespace IntegrationTests
             Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder), "trailFrontBorder");
         }
 
-        /*
+        [Ignore("next next test")]
         [UnityTest]
         public IEnumerator FacesRightAfterTurnRight()
         {
@@ -187,11 +191,10 @@ namespace IntegrationTests
             tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
 
-            tronTransform.GetComponent<Tron>().TurnRight();
+            tronTransform.GetComponent<RacingInteraction>().TurnRight();
             yield return new WaitForEndOfFrame();
 
             // assert tronTransformation.rotation, bla
         }
-        */
     }
 }
