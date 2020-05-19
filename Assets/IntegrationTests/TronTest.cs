@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -28,7 +28,6 @@ namespace IntegrationTests
 
         private static void AssertIsTripleAsHigh(GameObject gameObject, string objectId)
         {
-            //var visualization = gameObject.transform.GetComponent<Tron>().visualization;
             var scale = gameObject.transform.localScale;
             var width = scale.x;
             var depth = scale.z;
