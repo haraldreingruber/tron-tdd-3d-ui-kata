@@ -33,6 +33,7 @@ namespace IntegrationTests
             }
         }
 
+        [Ignore("next test")]
         [UnityTest]
         public IEnumerator FacesRightAfterTurnRight()
         {
