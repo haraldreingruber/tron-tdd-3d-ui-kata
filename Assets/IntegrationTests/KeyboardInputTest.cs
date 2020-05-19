@@ -15,9 +15,10 @@ namespace IntegrationTests
 
         // TODO test: ignore keys before start race
 
-        class RacingInteractionMock : RacingInteraction
+        private class RacingInteractionMock : RacingInteraction
         {
             private bool _turnRightHasBeenCalled;
+
             public bool TurnRightHasBeenCalled()
             {
                 return _turnRightHasBeenCalled;
@@ -40,7 +41,7 @@ namespace IntegrationTests
             yield return Given.Scene(this, "MainScene");
             var tron = Find.SingleObjectById("Tron");
             var tronTransform = tron.transform;
-            RacingInteractionMock racingInteraction = tron.AddComponent<RacingInteractionMock>();
+            var racingInteraction = tron.AddComponent<RacingInteractionMock>();
             tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
             tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();

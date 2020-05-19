@@ -13,7 +13,7 @@ public class TrailProducer : MonoBehaviour
 {
     private Vector3 _parentBackBorder;
 
-    private GameObject currentTrail;
+    private GameObject _currentTrail;
     public GameObject trailPrefab;
     public GameObject trailsContainer;
 
@@ -21,8 +21,8 @@ public class TrailProducer : MonoBehaviour
     {
         _parentBackBorder = GeometryUtils.GetBackBorder(gameObject);
 
-        currentTrail = Instantiate(trailPrefab, trailsContainer.transform);
-        var currentTrailTransform = currentTrail.transform;
+        _currentTrail = Instantiate(trailPrefab, trailsContainer.transform);
+        var currentTrailTransform = _currentTrail.transform;
         currentTrailTransform.position = _parentBackBorder;
 
         var parentScale = transform.localScale;
@@ -31,17 +31,17 @@ public class TrailProducer : MonoBehaviour
 
     private void Update()
     {
-        if (currentTrail == null)
+        if (_currentTrail == null)
+        {
             return;
+        }
 
         var currentParentBackBorder = GeometryUtils.GetBackBorder(gameObject);
         var newLength = (currentParentBackBorder - _parentBackBorder).z;
-        var currentTrailTransform = currentTrail.transform;
+        var currentTrailTransform = _currentTrail.transform;
         currentTrailTransform.position = _parentBackBorder + Vector3.forward * (newLength / 2.0f);
         var localScale = currentTrailTransform.localScale;
         localScale.z = newLength;
         currentTrailTransform.localScale = localScale;
     }
 }
-
-// TODO (clean) - check and fix all warnings

@@ -8,7 +8,7 @@ public static class GeometryUtils
         var position = transform.position;
         var scale = transform.localScale;
 
-        return position + (Vector3.back * scale.z / 2.0f);
+        return position + Vector3.back * scale.z / 2.0f;
     }
 
     public static Vector3 GetFrontBorder(GameObject obj)
@@ -17,6 +17,6 @@ public static class GeometryUtils
         var position = transform.position;
         var scale = transform.localScale;
 
-        return position + (Vector3.forward * scale.z / 2.0f);
+        return position + Vector3.forward * scale.z / 2.0f;
     }
 }

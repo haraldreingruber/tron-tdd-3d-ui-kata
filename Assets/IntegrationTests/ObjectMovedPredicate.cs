@@ -8,7 +8,6 @@ namespace IntegrationTests
         private readonly Transform _transform;
         private readonly Vector3 _originalPosition;
         private readonly float _requiredDistance;
-        private float _currentDistance = 0.0f;
 
         public ObjectMovedPredicate(Transform transform, float requiredDistance)
         {
@@ -17,13 +16,13 @@ namespace IntegrationTests
             this._requiredDistance = requiredDistance;
         }
 
-        public float CurrentDistance => _currentDistance;
+        public float CurrentDistance { get; private set; } = 0.0f;
 
         public bool HasMoved()
         {
             var newPosition = _transform.position;
-            _currentDistance = Math.Abs(newPosition.z - _originalPosition.z);
-            return _currentDistance >= _requiredDistance;
+            CurrentDistance = Math.Abs(newPosition.z - _originalPosition.z);
+            return CurrentDistance >= _requiredDistance;
         }
     }
 }

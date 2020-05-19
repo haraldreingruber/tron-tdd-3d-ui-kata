@@ -27,7 +27,7 @@ namespace IntegrationTests
 
         public void AssertTimeoutWasNotReached(string condition)
         {
-            Assert.False(this._timeoutReached, $"timeout while waiting for {condition}");
+            Assert.False(_timeoutReached, $"timeout while waiting for {condition}");
         }
     }
 }

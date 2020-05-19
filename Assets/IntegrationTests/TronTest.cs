@@ -139,7 +139,7 @@ namespace IntegrationTests
 
             var trail = Find.SingleObjectById("Trail");
             Assert.That(trail.transform.localScale.y, Is.EqualTo(tronTransform.localScale.y), "trail height");
-            Assert.That(trail.transform.localScale.x, Is.EqualTo(tronTransform.localScale.x/2), "trail width");
+            Assert.That(trail.transform.localScale.x, Is.EqualTo(tronTransform.localScale.x / 2), "trail width");
         }
 
         [UnityTest]
