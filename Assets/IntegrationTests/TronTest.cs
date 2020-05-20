@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
 using UnityEngine.TestTools.Utils;
-using UnityEngine.UI;
 using Zenject;
 
 namespace IntegrationTests
@@ -48,9 +45,11 @@ namespace IntegrationTests
             // Tron is based on plane
             Assert.That(tron.transform.position.y, Is.EqualTo(0), objectId + ".y");
 
+            // ReSharper disable CommentTypo
             // Tron internally is aligned that its base is the bottom
             // Do we write a test for that or edit in the editor? Seems like Gui fiddeling?
             // Assert trail is internally aligned that its base is the bottom - manual
+            // ReSharper restore CommentTypo
 
             // Grid plane is also at 0
             var grid = Find.SingleObjectById("Grid");
@@ -77,17 +76,15 @@ namespace IntegrationTests
             yield return waiter;
             waiter.AssertTimeoutWasNotReached("move of Tron");
 
+            // ReSharper disable once Unity.InefficientPropertyAccess
             var newPosition = tronTransform.position;
             Assert.That(newPosition.y, Is.EqualTo(originalPosition.y));
             Assert.That(tronMoved.CurrentDistance, Is.GreaterThan(someDistance));
         }
 
-        private void ClickStartButton()
+        private static void ClickStartButton()
         {
             var buttonObject = Find.SingleObjectById("StartButton");
-            var button = buttonObject.GetComponent<Button>();
-            var buttonTransform = buttonObject.GetComponent<RectTransform>();
-            //button.onClick.Invoke();
 
             var pointer = new PointerEventData(EventSystem.current);
             ExecuteEvents.Execute(buttonObject, pointer, ExecuteEvents.pointerClickHandler);
@@ -138,8 +135,10 @@ namespace IntegrationTests
             yield return new WaitForEndOfFrame();
 
             var trail = Find.SingleObjectById("Trail");
-            Assert.That(trail.transform.localScale.y, Is.EqualTo(tronTransform.localScale.y), "trail height");
-            Assert.That(trail.transform.localScale.x, Is.EqualTo(tronTransform.localScale.x / 2), "trail width");
+            var trailScale = trail.transform.localScale;
+            var tronScale = tronTransform.localScale;
+            Assert.That(trailScale.y, Is.EqualTo(tronScale.y), "trail height");
+            Assert.That(trailScale.x, Is.EqualTo(tronScale.x / 2), "trail width");
         }
 
         [UnityTest]

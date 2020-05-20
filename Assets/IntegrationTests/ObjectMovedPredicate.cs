@@ -11,12 +11,12 @@ namespace IntegrationTests
 
         public ObjectMovedPredicate(Transform transform, float requiredDistance)
         {
-            this._transform = transform;
-            this._originalPosition = transform.position;
-            this._requiredDistance = requiredDistance;
+            _transform = transform;
+            _originalPosition = transform.position;
+            _requiredDistance = requiredDistance;
         }
 
-        public float CurrentDistance { get; private set; } = 0.0f;
+        public float CurrentDistance { get; private set; }
 
         public bool HasMoved()
         {

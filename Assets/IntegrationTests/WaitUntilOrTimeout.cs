@@ -25,6 +25,7 @@ namespace IntegrationTests
             }
         }
 
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Global
         public void AssertTimeoutWasNotReached(string condition)
         {
             Assert.False(_timeoutReached, $"timeout while waiting for {condition}");

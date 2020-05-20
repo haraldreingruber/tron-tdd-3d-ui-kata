@@ -11,7 +11,7 @@ namespace IntegrationTests
     public class KeyboardInputTest : SceneTestFixture
     {
         // taken from: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/Testing.html
-        private InputTestFixture input = new InputTestFixture();
+        private readonly InputTestFixture _input = new InputTestFixture();
 
         // TODO test: ignore keys before start race
 
@@ -47,7 +47,7 @@ namespace IntegrationTests
             yield return new WaitForEndOfFrame();
 
             var keyboard = InputSystem.AddDevice<Keyboard>();
-            input.Press(keyboard.rightArrowKey);
+            _input.Press(keyboard.rightArrowKey);
             yield return new WaitForEndOfFrame();
 
             Assert.That(racingInteraction.TurnRightHasBeenCalled());

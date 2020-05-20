@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// ReSharper disable CommentTypo
 /*
  * Idea:
  * we start with a TrailInteraction
@@ -9,6 +10,7 @@
  * - when move the wall gets longer
  *   - holt distanz von seinem game object seit letztem update und update its current trail
  */
+// ReSharper restore CommentTypo
 public class TrailProducer : MonoBehaviour
 {
     private Vector3 _parentBackBorder;
@@ -31,7 +33,7 @@ public class TrailProducer : MonoBehaviour
 
     private void Update()
     {
-        if (_currentTrail == null)
+        if (!_currentTrail)
         {
             return;
         }

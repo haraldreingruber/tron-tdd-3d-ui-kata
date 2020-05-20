@@ -23,7 +23,7 @@ namespace Editor
 
         private void StartRaceButtonAction()
         {
-            var racingInteraction = (target as RacingInteraction);
+            var racingInteraction = target as RacingInteraction;
             if (racingInteraction == null)
             {
                 Debug.Log("No racing interaction assigned");

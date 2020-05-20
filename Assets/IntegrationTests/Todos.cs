@@ -1,5 +1,7 @@
-﻿namespace IntegrationTests
+﻿// ReSharper disable once EmptyNamespace
+namespace IntegrationTests
 {
+    // ReSharper disable CommentTypo
     /*
     * TODO (Test List)
     * - button disappears after click
@@ -23,4 +25,5 @@
     * - need more tests to see problems of integrated tests
     * - need more logic to have options to move to unit tests
     */
+    // ReSharper restore CommentTypo
 }
