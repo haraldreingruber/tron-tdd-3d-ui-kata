@@ -1,0 +1,33 @@
+{
+    "name": "Player",
+    "maps": [
+        {
+            "name": "Navigate",
+            "id": "87e5137c-2b6b-4089-81e3-ce145975003e",
+            "actions": [
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "0807f9fa-7a5e-4390-a099-0b464c5a5750",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "da24aeeb-5d5d-48eb-ac68-194e7ae8016b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
