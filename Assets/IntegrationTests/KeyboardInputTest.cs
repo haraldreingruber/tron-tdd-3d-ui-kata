@@ -57,21 +57,16 @@ namespace IntegrationTests
             var racingInteraction = tron.AddComponent<RacingInteractionMock>();
             tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
             tronTransform.GetComponent<Tron>().StartRace();
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();    
 
-  
             var keyboard = InputSystem.AddDevice<Keyboard>();
-            Debug.Log("setup");
             _input.Press(keyboard.dKey);
-            Debug.Log("yield");
             yield return new WaitForEndOfFrame();
 
-            Debug.Log("assert");
             Assert.That(racingInteraction.TurnRightHasBeenCalled());
-            Debug.Log("success");
         }
-        
-        // TODO: test that nothing happens before gmae starts
+
+        // TODO: test that nothing happens before game starts
         // TODO: ignore 0/0 move events
     }
 }
