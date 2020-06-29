@@ -27,17 +27,20 @@ namespace IntegrationTests
         {
             yield return Given.Scene(this, "MainScene");
             var tron = Find.SingleObjectById("Tron");
+
+            // TODO duplication: extract mock creation to helper method
             var tronTransform = tron.transform;
             var racingInteraction = tron.AddComponent<RacingInteractionMock>();
-
             tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
 
             // TODO duplication: We have lots of calls like this. Maybe have Given.RaceStarted()
+            // need also var tronTransform = tron.transform;
             tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
 
             yield return _inputPressed.Right();
 
+            // TODO duplication: extract mock verification to helper methods
             Assert.That(racingInteraction.TurnRightHasBeenCalled());
         }
 
@@ -58,6 +61,7 @@ namespace IntegrationTests
             Assert.That(racingInteraction.TurnRightHasBeenCalled(), Is.False);
         }
 
+        // TODO: figure out why start doesn't work anymore in production
         // TODO: ignore 0/0 move events
     }
 
