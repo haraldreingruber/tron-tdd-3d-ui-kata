@@ -65,8 +65,25 @@ namespace IntegrationTests
 
             Assert.That(racingInteraction.TurnRightHasBeenCalled());
         }
+        
+        [UnityTest]
+        public IEnumerator DoesntTurnRightWhenGameHasNotStarted()
+        {
+            yield return Given.Scene(this, "MainScene");
+            var tron = Find.SingleObjectById("Tron");
+            var tronTransform = tron.transform;
+            var racingInteraction = tron.AddComponent<RacingInteractionMock>();
+            tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
+            // tronTransform.GetComponent<Tron>().StartRace();
+            yield return new WaitForEndOfFrame();    
 
-        // TODO: test that nothing happens before game starts
+            var keyboard = InputSystem.AddDevice<Keyboard>();
+            _input.Press(keyboard.dKey);
+            yield return new WaitForEndOfFrame();
+
+            Assert.That(racingInteraction.TurnRightHasBeenCalled(), Is.False);
+        }
+
         // TODO: ignore 0/0 move events
     }
 }
