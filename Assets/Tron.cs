@@ -16,6 +16,7 @@ public class Tron : MonoBehaviour
     {
         var m_Move = context.ReadValue<Vector2>();
         Debug.Log(m_Move);
+        racingInteraction.TurnRight();
     }
 
 }
