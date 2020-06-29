@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.TestTools;
 using Zenject;
 
@@ -9,21 +8,18 @@ namespace IntegrationTests
 {
     public class KeyboardInputTest : SceneTestFixture
     {
-        // taken from: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/Testing.html
-        private readonly InputTestFixture _input = new InputTestFixture();
-        private Keyboard _keyboard;
+        private readonly InputPressed _inputPressed = new InputPressed();
 
         [SetUp]
-        public void PrepareInputSystem()
+        public void Prepare()
         {
-            _input.Setup();
-            _keyboard = InputSystem.AddDevice<Keyboard>();
+            _inputPressed.PrepareInputSystem();
         }
 
         [TearDown]
-        public void CloseInputSystem()
+        public void Close()
         {
-            _input.TearDown();
+            _inputPressed.CloseInputSystem();
         }
 
         [UnityTest]
@@ -35,17 +31,16 @@ namespace IntegrationTests
             var racingInteraction = tron.AddComponent<RacingInteractionMock>();
 
             tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
-            
+
+            // TODO duplication: We have lots of calls like this. Maybe have Given.RaceStarted()
             tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
 
-            _input.Press(_keyboard.dKey);
-            yield return new WaitForEndOfFrame();
-            // yield return new WaitForInputPress(_input).Right();
+            yield return _inputPressed.Right();
 
             Assert.That(racingInteraction.TurnRightHasBeenCalled());
         }
-        
+
         [UnityTest]
         public IEnumerator DoesntTurnRightWhenGameHasNotStarted()
         {
@@ -56,34 +51,14 @@ namespace IntegrationTests
             var racingInteraction = tron.AddComponent<RacingInteractionMock>();
             tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
             // NO tronTransform.GetComponent<Tron>().StartRace();
-            yield return new WaitForEndOfFrame();    
-
-            _input.Press(_keyboard.dKey);
             yield return new WaitForEndOfFrame();
+
+            yield return _inputPressed.Right();
 
             Assert.That(racingInteraction.TurnRightHasBeenCalled(), Is.False);
         }
 
         // TODO: ignore 0/0 move events
-        
-    }
-
-    public class WaitForInputPress
-    {
-        private readonly InputTestFixture _input;
-        private readonly Keyboard _keyboard;
-
-        public WaitForInputPress(InputTestFixture input)
-        {
-            _input = input;
-            _keyboard = InputSystem.AddDevice<Keyboard>();
-        }
-
-        public YieldInstruction Right()
-        {
-            _input.Press(_keyboard.dKey);
-            return new WaitForEndOfFrame();
-        }
     }
 
     class RacingInteractionMock : RacingInteraction
