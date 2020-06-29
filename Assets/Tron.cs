@@ -15,8 +15,10 @@ public class Tron : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         var m_Move = context.ReadValue<Vector2>();
-        Debug.Log(m_Move);
-        racingInteraction.TurnRight();
+        if (racingInteraction.IsRacing)
+        {
+            racingInteraction.TurnRight();
+        }
     }
 
 }

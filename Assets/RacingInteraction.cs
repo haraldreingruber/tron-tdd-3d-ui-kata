@@ -10,7 +10,7 @@ public class RacingInteraction : MonoBehaviour
         IsRacing = true;
     }
 
-    private bool IsRacing { get; set; }
+    public bool IsRacing { get; set; }
 
     public virtual void TurnRight()
     {

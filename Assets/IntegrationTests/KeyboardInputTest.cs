@@ -7,61 +7,40 @@ using Zenject;
 
 namespace IntegrationTests
 {
-    //[TestFixture]
     public class KeyboardInputTest : SceneTestFixture
     {
         // taken from: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/Testing.html
         private readonly InputTestFixture _input = new InputTestFixture();
 
         [SetUp]
-        public void foo()
+        public void PrepareInputSystem()
         {
-            Debug.Log("setup-foo");
             _input.Setup();
         }
 
         [TearDown]
-        public void foo2()
+        public void CloseInputSystem()
         {
-            Debug.Log("teardown-foo");
             _input.TearDown();
         }
 
-        // TODO test: ignore keys before start race
-
-        private class RacingInteractionMock : RacingInteraction
-        {
-            private bool _turnRightHasBeenCalled;
-
-            public bool TurnRightHasBeenCalled()
-            {
-                return _turnRightHasBeenCalled;
-            }
-
-            public override void TurnRight()
-            {
-                _turnRightHasBeenCalled = true;
-            }
-
-            public override void FixedUpdate()
-            {
-            }
-        }
-
         [UnityTest]
-        public IEnumerator FacesRightAfterTurnRight()
+        public IEnumerator ShouldTriggerTurnRight()
         {
             yield return Given.Scene(this, "MainScene");
             var tron = Find.SingleObjectById("Tron");
             var tronTransform = tron.transform;
             var racingInteraction = tron.AddComponent<RacingInteractionMock>();
+
             tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
+            
             tronTransform.GetComponent<Tron>().StartRace();
-            yield return new WaitForEndOfFrame();    
+            yield return new WaitForEndOfFrame();
 
             var keyboard = InputSystem.AddDevice<Keyboard>();
             _input.Press(keyboard.dKey);
             yield return new WaitForEndOfFrame();
+            // yield return new WaitForInputPress(_input).Right();
 
             Assert.That(racingInteraction.TurnRightHasBeenCalled());
         }
@@ -74,7 +53,7 @@ namespace IntegrationTests
             var tronTransform = tron.transform;
             var racingInteraction = tron.AddComponent<RacingInteractionMock>();
             tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
-            // tronTransform.GetComponent<Tron>().StartRace();
+            // NO tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();    
 
             var keyboard = InputSystem.AddDevice<Keyboard>();
@@ -85,5 +64,43 @@ namespace IntegrationTests
         }
 
         // TODO: ignore 0/0 move events
+        
+    }
+
+    public class WaitForInputPress
+    {
+        private readonly InputTestFixture _input;
+        private readonly Keyboard _keyboard;
+
+        public WaitForInputPress(InputTestFixture input)
+        {
+            _input = input;
+            _keyboard = InputSystem.AddDevice<Keyboard>();
+        }
+
+        public YieldInstruction Right()
+        {
+            _input.Press(_keyboard.dKey);
+            return new WaitForEndOfFrame();
+        }
+    }
+
+    class RacingInteractionMock : RacingInteraction
+    {
+        private bool _turnRightHasBeenCalled;
+
+        public bool TurnRightHasBeenCalled()
+        {
+            return _turnRightHasBeenCalled;
+        }
+
+        public override void TurnRight()
+        {
+            _turnRightHasBeenCalled = true;
+        }
+
+        public override void FixedUpdate()
+        {
+        }
     }
 }
