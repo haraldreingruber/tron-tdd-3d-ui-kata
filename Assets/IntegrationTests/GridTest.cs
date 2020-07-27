@@ -6,6 +6,7 @@ namespace IntegrationTests
 {
     public class GridTest : SceneTestFixture
     {
+        // Grid test list:
         // When game starts, there is a tron on the grid.
         // (done) 1. load the main game scene
         // (done) 2. Assert.that("there is a grid") Is it relevant if it is static?
@@ -20,7 +21,7 @@ namespace IntegrationTests
             const string objectId = "Grid";
             var grid = Find.SingleObjectById(objectId);
             AssertThat.IsVisible(grid, objectId);
-            // open question: Do we need to test the size of the grid?
+            // TODO Do we need to test the size of the grid?
             // Definitely not test the colour of the grid.
         }
     }

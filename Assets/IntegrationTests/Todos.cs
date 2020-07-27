@@ -3,7 +3,7 @@ namespace IntegrationTests
 {
     // ReSharper disable CommentTypo
     /*
-    * TODO (Test List)
+    * TODO High level test list:
     * - button disappears after click
     * - camera follows the racer
     * - change direction (racer and walls) WIP

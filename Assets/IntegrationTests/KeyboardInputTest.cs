@@ -61,8 +61,8 @@ namespace IntegrationTests
             Assert.That(racingInteraction.TurnRightHasBeenCalled(), Is.False);
         }
 
-        // TODO: figure out why start doesn't work anymore in production
-        // TODO: ignore 0/0 move events
+        // TODO (broken code) figure out why start doesn't work anymore in production - create test for that?
+        // TODO next test: ignore 0/0 move events
     }
 
     class RacingInteractionMock : RacingInteraction

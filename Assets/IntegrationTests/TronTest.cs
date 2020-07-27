@@ -90,9 +90,7 @@ namespace IntegrationTests
             ExecuteEvents.Execute(buttonObject, pointer, ExecuteEvents.pointerClickHandler);
         }
 
-        /*
-         * TODO (refactor) - move Trail relevant tests to TrailTest?
-         */
+        // TODO (refactor) - move Trail relevant tests to TrailTest?
 
         [UnityTest]
         public IEnumerator CreatesTrailWhenStartRacing()
@@ -181,7 +179,7 @@ namespace IntegrationTests
             Assert.That(trailFrontBorder, Is.EqualTo(currentTronBackBorder).Using(comparer), "trailFrontBorder");
         }
 
-        [Ignore("next next test")]
+        [Ignore("next next test")] // TODO next next test
         [UnityTest]
         public IEnumerator FacesRightAfterTurnRight()
         {

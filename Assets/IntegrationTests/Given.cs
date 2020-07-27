@@ -12,7 +12,7 @@ namespace IntegrationTests
             yield return self.LoadScene(sceneName);
 
             var currentSceneName = "";
-            // Wait a few seconds to ensure the scene starts correctly
+            // Wait until scene started
             yield return new WaitUntilOrTimeout(() =>
             {
                 currentSceneName = SceneManager.GetActiveScene().name;
