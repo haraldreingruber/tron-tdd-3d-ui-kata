@@ -2,7 +2,7 @@
 
 ## Requirements
 
-* Unity 2019.3.8 (or newer)
+* Unity 2019.4.4 (or newer)
 * [IDE](https://docs.unity3d.com/Manual/ScriptingToolsIDEs.html)
   * JetBrains Rider
   * Visual Studio
