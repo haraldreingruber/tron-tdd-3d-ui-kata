@@ -29,8 +29,8 @@ namespace IntegrationTests
             var tron = Find.SingleObjectById("Tron");
 
             // TODO duplication: extract mock creation to helper method
-            var tronTransform = tron.transform;
-            var racingInteraction = tron.AddComponent<RacingInteractionMock>();
+            var tronTransform = tron.transform; // TODO: do we need transform? direct?
+            var racingInteraction = tron.AddComponent<RacingInteractionSpy>();
             tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
 
             // TODO duplication: We have lots of calls like this. Maybe have Given.RaceStarted()
@@ -51,7 +51,7 @@ namespace IntegrationTests
 
             var tron = Find.SingleObjectById("Tron");
             var tronTransform = tron.transform;
-            var racingInteraction = tron.AddComponent<RacingInteractionMock>();
+            var racingInteraction = tron.AddComponent<RacingInteractionSpy>();
             tronTransform.GetComponent<Tron>().racingInteraction = racingInteraction;
             // NO tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
@@ -65,7 +65,7 @@ namespace IntegrationTests
         // TODO next test: ignore 0/0 move events
     }
 
-    class RacingInteractionMock : RacingInteraction
+    class RacingInteractionSpy : RacingInteraction
     {
         private bool _turnRightHasBeenCalled;
 

@@ -6,7 +6,7 @@ public class Tron : MonoBehaviour
     public RacingInteraction racingInteraction;
     public TrailProducer trailProducer;
 
-    public void StartRace()
+    public virtual void StartRace()
     {
         racingInteraction.StartRace();
         trailProducer.StartProducing();
