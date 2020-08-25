@@ -23,7 +23,7 @@ namespace IntegrationTests
         }
 
         [UnityTest]
-        public IEnumerator ShouldTriggerTurnRight()
+        public IEnumerator ShouldTriggerTurnRightOnlyOnKeyPressStarted()
         {
             yield return Given.Scene(this, "MainScene");
             var tron = Find.SingleObjectById("Tron");
@@ -41,7 +41,7 @@ namespace IntegrationTests
             yield return _inputSimulation.PressRight();
 
             // TODO duplication: extract mock verification to helper methods
-            Assert.That(racingInteraction.TurnRightHasBeenCalled());
+            Assert.That(racingInteraction.TurnRightCallCount(), Is.EqualTo(1), "TurnRight has been called");
         }
 
         [UnityTest]
@@ -58,24 +58,24 @@ namespace IntegrationTests
 
             yield return _inputSimulation.PressRight();
 
-            Assert.That(racingInteraction.TurnRightHasBeenCalled(), Is.False);
+            Assert.That(racingInteraction.TurnRightCallCount(), Is.EqualTo(0));
         }
 
-        // TODO next test: ignore 0/0 move events
+        // TODO next test: send other key => don't turn right
     }
 
     class RacingInteractionSpy : RacingInteraction
     {
-        private bool _turnRightHasBeenCalled;
+        private int _turnRightCallCount;
 
-        public bool TurnRightHasBeenCalled()
+        public int TurnRightCallCount()
         {
-            return _turnRightHasBeenCalled;
+            return _turnRightCallCount;
         }
 
         public override void TurnRight()
         {
-            _turnRightHasBeenCalled = true;
+            _turnRightCallCount += 1;
         }
 
         public override void FixedUpdate()
