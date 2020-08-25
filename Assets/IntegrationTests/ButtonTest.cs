@@ -9,18 +9,18 @@ namespace IntegrationTests
 {
     public class ButtonTest : SceneTestFixture
     {
-        private readonly InputPressed _inputPressed = new InputPressed();
+        private readonly InputSimulation _inputSimulation = new InputSimulation();
 
         [SetUp]
         public void Prepare()
         {
-            _inputPressed.PrepareInputSystem();
+            _inputSimulation.Prepare();
         }
 
         [TearDown]
         public void Close()
         {
-            _inputPressed.CloseInputSystem();
+            _inputSimulation.Close();
         }
 
         [UnityTest]
@@ -50,7 +50,7 @@ namespace IntegrationTests
             var buttonRectTransform = button.GetComponent<RectTransform>();
             // var buttonRect = buttonRectTransform.rect;
             // var buttonCenter = buttonRect.position;
-            yield return _inputPressed.MouseLeftClick(buttonRectTransform.position);
+            // yield return _inputSimulation.MouseLeftClick(buttonRectTransform.position);
 
             yield return new WaitForSeconds(15);
             yield return new WaitForEndOfFrame();

@@ -8,18 +8,18 @@ namespace IntegrationTests
 {
     public class KeyboardInputTest : SceneTestFixture
     {
-        private readonly InputPressed _inputPressed = new InputPressed();
+        private readonly InputSimulation _inputSimulation = new InputSimulation();
 
         [SetUp]
         public void Prepare()
         {
-            _inputPressed.PrepareInputSystem();
+            _inputSimulation.Prepare();
         }
 
         [TearDown]
         public void Close()
         {
-            _inputPressed.CloseInputSystem();
+            _inputSimulation.Close();
         }
 
         [UnityTest]
@@ -38,7 +38,7 @@ namespace IntegrationTests
             tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
 
-            yield return _inputPressed.Right();
+            yield return _inputSimulation.PressRight();
 
             // TODO duplication: extract mock verification to helper methods
             Assert.That(racingInteraction.TurnRightHasBeenCalled());
@@ -56,7 +56,7 @@ namespace IntegrationTests
             // NO tronTransform.GetComponent<Tron>().StartRace();
             yield return new WaitForEndOfFrame();
 
-            yield return _inputPressed.Right();
+            yield return _inputSimulation.PressRight();
 
             Assert.That(racingInteraction.TurnRightHasBeenCalled(), Is.False);
         }
