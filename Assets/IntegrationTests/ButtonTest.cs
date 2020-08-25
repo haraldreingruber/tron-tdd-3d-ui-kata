@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 using Zenject;
@@ -38,14 +39,20 @@ namespace IntegrationTests
             button.onClick.AddListener(tronSpy.StartRace);
             yield return new WaitForEndOfFrame();
             yield return new WaitForEndOfFrame();
-
+            yield return new WaitForSeconds(10);
+            
             // first try: button.onClick.Invoke(); - works of course
-            button.Select();
+            //button.Select();
+            var buttonRectTransform = button.GetComponent<RectTransform>();
+            var buttonRect = buttonRectTransform.rect;
+            var buttonCenter = buttonRect.position;
+            yield return _inputPressed.MouseLeftClick(buttonRectTransform.position);
+            //
             yield return new WaitForSeconds(15);
             yield return new WaitForEndOfFrame();
             yield return new WaitForEndOfFrame();
 
-            Assert.That(tronSpy.StartRacingHasBeenCalled(), Is.True);
+            Assert.That(tronSpy.StartRacingHasBeenCalled(), Is.True, "tronSpy.StartRacingHasBeenCalled() has been called");
         }
     }
     
